@@ -29,6 +29,13 @@ class Transcriber:
 
         if not file_path:
             return
+        
+        base_name = os.path.splitext(file_path)[0]
+        output_file = f"{base_name}.txt"
+
+        if os.path.exists(output_file):
+            self.console.print(f"[bold yellow]スキップ: [/bold yellow] '{output_file}' は既に存在します")
+            return
 
         self.console.print(f"[cyan]Processing:[/cyan] {file_path}")
         try:
@@ -39,8 +46,6 @@ class Transcriber:
             return
 
         output_text = result["text"]
-        base_name = os.path.splitext(file_path)[0]
-        output_file = f"{base_name}.txt"
 
         try:
             with open(output_file, "w", encoding="utf-8") as f:
