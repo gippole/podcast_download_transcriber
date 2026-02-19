@@ -1,0 +1,7 @@
+mutagen
+feedparser
+requests
+rich
+openai-whisper
+torch
+numpy
