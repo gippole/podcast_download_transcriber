@@ -90,3 +90,10 @@ class Transcriber:
             self.transcribe_file(self.model, file_path)
         
         self.console.print("[bold blue]Batch processing complete![/bold blue]")
+
+if __name__ == "__main__":
+    # 引数からファイルパスを受け取る
+    if len(sys.argv) > 1:
+        file_path = sys.argv[1]
+        transcriber = Transcriber()
+        transcriber.transcribe_file(transcriber.model, file_path)
