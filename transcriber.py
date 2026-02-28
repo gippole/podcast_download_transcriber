@@ -22,7 +22,7 @@ class Transcriber:
             sys.exit(1)
 
 
-    def transcribe_file(self, model, file_path):
+    def transcribe_file(self, file_path):
         """
         Helper function to transcribe a single file using a loaded model.
         """
@@ -40,7 +40,7 @@ class Transcriber:
         self.console.print(f"[cyan]Processing:[/cyan] {file_path}")
         try:
             with self.console.status(f"[bold yellow]Transcribing {os.path.basename(file_path)}...[/bold yellow]", spinner="dots"):
-                result = model.transcribe(file_path)
+                result = self.model.transcribe(file_path)
         except Exception as e:
             self.console.print(f"[bold red]Error transcribing '{file_path}': {e}[/bold red]")
             return
@@ -96,4 +96,4 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         file_path = sys.argv[1]
         transcriber = Transcriber()
-        transcriber.transcribe_file(transcriber.model, file_path)
+        transcriber.transcribe_file(file_path)
