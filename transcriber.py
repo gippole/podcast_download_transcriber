@@ -74,6 +74,16 @@ class Transcriber:
             return
 
         self.console.print(f"[green]Found {len(audio_files)} audio files.[/green]")
+
+        self.process_files(audio_files)
+        
+    def process_files(self, audio_files):
+        """
+        Process a list of audio files.
+        """
+        if not audio_files:
+            self.console.print("[bold red]No audio files provided.[/bold red]")
+            return
         
         for i, file_path in enumerate(audio_files, 1):
             self.console.print(f"[bold magenta][{i}/{len(audio_files)}][/bold magenta] Starting transcription...")

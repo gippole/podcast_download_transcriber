@@ -63,15 +63,15 @@ def main():
                 console.print("[red]エラー: 数値を入力してください。[/red]")
         
         elif choice == '5':
-            download_folder = downloader.get_download_folder()
+            downloaded_files = downloader.get_downloaded_files()
 
-            if not os.path.exists(download_folder):
-                console.print(f"[red]エラー: ダウンロード先が空です |{download_folder}|[/red]")
+            if not downloaded_files:
+                console.print("[red]エラー: ファイルをダウンロードしてください[/red]")
 
             if not myTranscriber:
                 myTranscriber = Transcriber(args.model)
             
-            myTranscriber.process_directory(download_folder)
+            myTranscriber.process_files(downloaded_files)
         
         elif choice == '6':
             console.print("[bold blue]終了します。[/bold blue]")

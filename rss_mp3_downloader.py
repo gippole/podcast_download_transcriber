@@ -8,8 +8,6 @@ import re
 from rich.console import Console
 from rich.table import Table
 from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn, DownloadColumn, TransferSpeedColumn, TimeRemainingColumn
-from rich.panel import Panel
-from rich import print as rprint
 
 console = Console()
 
@@ -18,6 +16,7 @@ class RSSMp3Downloader:
         """初期化"""
         self.base_download_folder = download_folder
         self.download_folder = download_folder
+        self.downloaded_files = []
         self.mp3_list = []
         self.channel_title = None
         
@@ -27,6 +26,10 @@ class RSSMp3Downloader:
     def get_download_folder(self):
         """ダウンロードフォルダのパスを取得"""
         return self.download_folder
+    
+    def get_downloaded_files(self):
+        """ダウンロード済みファイルのリストを取得"""
+        return self.downloaded_files
     
     def fetch_rss(self, rss_url):
         """RSSフィードを取得してMP3ファイルのURLを抽出"""
@@ -215,6 +218,11 @@ class RSSMp3Downloader:
                                 progress.update(task, advance=len(chunk))
             
             console.print(f"[bold green]完了:[/bold green] {filename} を保存しました。")
+            
+            # ダウンロード済みリストに追加
+            if filepath not in self.downloaded_files:
+                self.downloaded_files.append(filepath)
+            
             # Try to write ID3 tags: Title = enclosure_title, Album = channel title
             try:
                 enclosure_title = item.get('enclosure_title') or title
@@ -265,7 +273,7 @@ class RSSMp3Downloader:
             tags.save(filepath)
             console.print(f"[dim]ID3タグを確認/更新しました: Title='{tags.get('title', [''])[0]}', Album='{tags.get('album', [''])[0]}'[/dim]")
         except Exception as e:
-            # 書き込み中に失敗した場合、詳細を表示する
+            console.print(f"[bold red]エラー: タグ書き込み失敗[/bold red] {e}")
             raise
     
     def download_range(self, start, end):
