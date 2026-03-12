@@ -155,7 +155,7 @@ class RSSMp3Downloader:
         
         # URLからファイル名が取得できない場合や意味のない場合はタイトルを使用
         name, _ = os.path.splitext(filename)
-        if not filename or not name or name in ['', 'index', 'download', 'default', 'file', 'index']:
+        if not filename or not name or name in ['', 'index', 'download', 'default', 'file', 'index', 'audio']:
             if title:
                 filename = title + '.mp3'
             else:
