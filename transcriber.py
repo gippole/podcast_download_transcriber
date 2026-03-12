@@ -87,7 +87,7 @@ class Transcriber:
         
         for i, file_path in enumerate(audio_files, 1):
             self.console.print(f"[bold magenta][{i}/{len(audio_files)}][/bold magenta] Starting transcription...")
-            self.transcribe_file(self.model, file_path)
+            self.transcribe_file(file_path)
         
         self.console.print("[bold blue]Batch processing complete![/bold blue]")
 
